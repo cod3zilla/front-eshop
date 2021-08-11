@@ -1,8 +1,7 @@
 {
   "name": "mycms",
   "version": "0.1.0",
-  "proxy": "https://mern-shopzilla.herokuapp.com/",
-  "homepage": ".",  
+  "proxy": "https://mern-shopzilla.herokuapp.com",    
   "private": true,
   "dependencies": {
     "@paypal/react-paypal-js": "^7.2.1",
