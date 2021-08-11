@@ -10,7 +10,7 @@ import {PRODUCTS_FETCH,
 export const productsAction=()=>async(dispatch)=>{
     try {
         dispatch({type:PRODUCTS_FETCH})
-        const {data}=await axios.get('/products')
+        const {data}=await axios.get('https://mern-shopzilla.herokuapp.com/products')
         dispatch({
             type:PRODUCTS_SUCCESS,
             payload:data
