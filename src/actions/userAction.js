@@ -17,7 +17,7 @@ import {USER_LOG_REQUEST,
 export const register=(name, email, password)=> async (dispatch)=>{
     try {
         dispatch({type:USER_REG_REQUEST})
-        const {data}=await axios.post('users/create',{name, email, password})
+        const {data}=await axios.post('https://mern-shopzilla.herokuapp.com/users/create',{name, email, password})
 
         dispatch({
             type:USER_REG_SUCCESS,
@@ -42,7 +42,7 @@ export const login=(email, password)=> async(dispatch)=>{
     try {
         dispatch({type:USER_LOG_REQUEST})
         const config={headers:{'Content-Type':'application/json'}}
-        const {data}= await axios.post('/users/login',{email, password},config)
+        const {data}= await axios.post('https://mern-shopzilla.herokuapp.com/users/login',{email, password},config)
         
         dispatch({
             type:USER_LOG_SUCCESS,
@@ -68,7 +68,7 @@ export const getUserProfile=(id)=> async (dispatch, getState)=>{
         const config= {headers:{
         'Content-Type':'application/json',
         Authorization: `Bearer ${userInfo.token}`}}
-        const {data}= await axios.get(`/users/profile/`, config)
+        const {data}= await axios.get(`https://mern-shopzilla.herokuapp.com/users/profile/`, config)
 
         dispatch({
             type:USER_PROFILE_SUCCESS,
@@ -100,7 +100,7 @@ export const userUpdateProfile=(user)=> async (dispatch, getState)=>{
             'Content-Type': 'application/json',
             Authorization:`Bearer ${userInfo.token}`
         }}
-        const {data}= await axios.put('/users/profile', user, config)
+        const {data}= await axios.put('https://mern-shopzilla.herokuapp.com/users/profile', user, config)
         
         dispatch({
             type:USER_UPDATE_SUCCESS,

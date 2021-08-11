@@ -24,7 +24,7 @@ export const createOrders=(order)=>async (dispatch, getState)=>{
             'Content-Type': 'application/json',
             Authorization:`Bearer ${userInfo.token}`
         }}
-        const {data}= await axios.post('/order',order, config)
+        const {data}= await axios.post('https://mern-shopzilla.herokuapp.com/order',order, config)
         dispatch({
             type:ORDER_SUCCESS,
             payload:data
@@ -51,7 +51,7 @@ export const getOrderDetails=(id)=>async (dispatch, getState)=>{
                 Authorization:`Bearer ${userInfo.token}`
             }
         }
-        const {data}= await axios.get(`/order/${id}`,config)
+        const {data}= await axios.get(`https://mern-shopzilla.herokuapp.com/order/${id}`,config)
 
         dispatch({
             type:ORDER_DETAIL_SUCCESS,
@@ -78,7 +78,7 @@ export const payOrder=(orderId, paymentResult)=>async (dispatch, getState)=>{
                 Authorization:`Bearer ${userInfo.token}`
             }
         }
-        const {data}= await axios.put(`/order/${orderId}/pay`,config)
+        const {data}= await axios.put(`https://mern-shopzilla.herokuapp.com/order/${orderId}/pay`,config)
 
         dispatch({
             type:ORDER_PAY_SUCCESS,
@@ -105,7 +105,7 @@ export const getOrderList= ()=>async (dispatch,getState)=>{
                 Authorization:`Bearer ${userInfo.token}`
             }
         }
-        const {data}= await axios.get('order/myorder', config)
+        const {data}= await axios.get('https://mern-shopzilla.herokuapp.com/order/myorder', config)
 
         dispatch({
             type:MY_ORDER_SUCCESS,

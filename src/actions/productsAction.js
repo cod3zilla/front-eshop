@@ -27,7 +27,7 @@ export const productsAction=()=>async(dispatch)=>{
 export const productDetailsAction=(id)=>async(dispatch)=>{
     try {
         dispatch({type:PRODUCT_DETAILS_FETCH})
-        const {data}=await axios.get(`/products/product/${id}`)
+        const {data}=await axios.get(`https://mern-shopzilla.herokuapp.com/products/product/${id}`)
         dispatch({type:PRODUCT_DETAILS_SUCCESS,payload:data})
 
     } catch (error) {

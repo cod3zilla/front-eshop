@@ -6,7 +6,7 @@ import {CART_ADD_ITEMS,
 } from '../constants/cartConstant'
 
 export const addToCart=(id, qty)=> async (dispatch, getState)=>{
-    const {data}= await axios(`/products/product/${id}`)
+    const {data}= await axios(`https://mern-shopzilla.herokuapp.com/products/product/${id}`)
     dispatch({
         type:CART_ADD_ITEMS,
         payload:{
