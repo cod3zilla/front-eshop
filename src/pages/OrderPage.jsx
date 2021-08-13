@@ -28,6 +28,7 @@ const OrderPage = ({match}) => {
       const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+      script.integrity="sha384-DmglT/QqCbHKzXs1OHdnY+IKJ0Sx7lkOF/o4mS9gfw3ZV39wX7Rs83ajnNKrP9mY"
       script.crossOrigin='anonymous'
       script.async = true;
       script.onload = () => {

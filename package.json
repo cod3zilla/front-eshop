@@ -1,7 +1,7 @@
 {
   "name": "front-eshop",
   "version": "0.1.0",
-  "proxy": "https://mern-shopzilla.herokuapp.com",    
+  "proxy": "https://mern-shopzilla.herokuapp.com",
   "private": true,
   "dependencies": {
     "@paypal/react-paypal-js": "^7.2.1",
@@ -11,6 +11,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
     "bootstrap-icons": "^1.5.0",
+    "cors": "^2.8.5",
     "install": "^0.13.0",
     "npm": "^7.20.5",
     "react": "^17.0.2",
