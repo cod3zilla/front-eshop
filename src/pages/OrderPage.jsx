@@ -28,6 +28,7 @@ const OrderPage = ({match}) => {
       const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+      script.crossOrigin='anonymous'
       script.async = true;
       script.onload = () => {
         setSdkReady(true)
