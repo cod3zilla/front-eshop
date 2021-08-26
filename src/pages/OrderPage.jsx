@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import {Row, Col, NavLink, ListGroup, Image, Card} from 'react-bootstrap'
-import { PayPalButton } from "react-paypal-button-v2"
+//import { PayPalButton } from "react-paypal-button-v2"
+import PayPalButton from 'react-paypal-smart-button'
 import {Link} from 'react-router-dom'
 import { getOrderDetails, payOrder } from '../actions/orderAction'
 import {ORDER_PAY_RESET} from '../constants/orderConstant'
@@ -13,6 +14,7 @@ import Message from '../components/Message'
 const OrderPage = ({match}) => {
     
     const [sdkReady, setSdkReady]=useState(false)
+    const [clientId, setClientId]=useState('')
     const orderId=match.params.id
     const dispatch = useDispatch()
     const orderDetails=useSelector(state=>state.orderDetails)
@@ -22,36 +24,25 @@ const OrderPage = ({match}) => {
     const {loading:loadingPay, success:successPay}=orderPay   
 
     useEffect(()=>{
-    const addPaypalScript= async ()=>{
-        const { data:clientId } = await axios.get('https://mern-shopzilla.herokuapp.com/config/paypal')
-        
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
-      script.integrity="sha384-DmglT/QqCbHKzXs1OHdnY+IKJ0Sx7lkOF/o4mS9gfw3ZV39wX7Rs83ajnNKrP9mY"
-      script.crossOrigin='anonymous'
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true)
-        
-      };
-      document.body.appendChild(script);    
+    const addPaypalScript= async ()=>{        
+    const { data:clientId } = await axios.get('/config/paypal')
+      setClientId(clientId)   
     }
     if(!order||successPay){
         dispatch(getOrderDetails(orderId))
         dispatch({type:ORDER_PAY_RESET})
     }else if(!order.isPaid){
-        if(!window.paypal){
+        if(!clientId){
             addPaypalScript()
         }else{
             setSdkReady(true)
         }
     }    
-},[dispatch,orderId, order, successPay, loadingPay])
+},[dispatch,orderId, order, successPay, loadingPay, clientId])
 
-const handlePaymentSuccess=(PaymentResult)=>{
+const handlePaymentSuccess=(paymentResult)=>{    
     
-    dispatch(payOrder(orderId, PaymentResult))
+    dispatch(payOrder(orderId, paymentResult))
 }    
     return loading? <Loading/> 
     :error?<Message variant="danger" message={error} />: (
@@ -128,6 +119,7 @@ const handlePaymentSuccess=(PaymentResult)=>{
                     {/* <ListGroup.Item>
                     <PayPalButton 
                         amount={order.totalPrice}
+                        currency="USD"
                         onSuccess={handlePaymentSuccess}
                         />
                     </ListGroup.Item> */}
@@ -139,14 +131,23 @@ const handlePaymentSuccess=(PaymentResult)=>{
                     <Loading />
                   ) : (
                     <PayPalButton
-                      amount={Number(order.totalPrice)}                      
-                      onSuccess={handlePaymentSuccess}
+                    clientId={clientId}
+                      price={Number(order.totalPrice)}  
+                      currency="USD"                    
+                      paySubmit={ handlePaymentSuccess}
                     ></PayPalButton>
                   )}
                 </ListGroup.Item>
               )}
-                    
-                </Col>
+              {order.isPaid && (
+                  <ListGroup className="mt-3">
+                  <ListGroup.Item>
+                  <NavLink as={Link} to={`/profile`}> <i style={{fontSize:'2rem',color:'#FFC93C'}} className="fas fa-truck"></i>&nbsp;&nbsp;  Check your delivery details</NavLink>
+                  </ListGroup.Item> 
+                  </ListGroup>
+              )}
+                   
+            </Col>
           </Row>
         </>
     )

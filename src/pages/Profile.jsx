@@ -1,9 +1,12 @@
 import React,{useState, useEffect} from 'react'
+import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {getUserProfile, userUpdateProfile} from '../actions/userAction'
-import {Form, Row, Col, Button,Container} from 'react-bootstrap'
+import {getOrderList} from '../actions/orderAction'
+import {Form, Row, Col, Button,Container, Table, NavLink} from 'react-bootstrap'
 import Message from '../components/Message'
 import Loading from '../components/Loading'
+
 
 
 const Profile = ({history}) => {
@@ -13,7 +16,6 @@ const Profile = ({history}) => {
     const [password, setPassword]=useState('')
     const [confirmPassword, setConfirmPassword]=useState('')
     const [message, setMessage]=useState('')
-    // order list
     
     //profile update
     const dispatch=useDispatch()
@@ -25,7 +27,10 @@ const Profile = ({history}) => {
 
     const userUpdate=useSelector(state=>state.userUpdate)
     const {success}=userUpdate
-    console.log(success)
+    // order list
+    const myOrderList=useSelector(state=>state.myOrderList)
+    const {myOrder, loading:orderLoading, error:orderError}=myOrderList
+    
     
     useEffect(()=>{
     if(!userInfo){
@@ -34,12 +39,13 @@ const Profile = ({history}) => {
        if(!user.name){
            dispatch(getUserProfile('profile'))
            setMessage('profile update successful!')
+           dispatch(getOrderList())
        }else{
            setName(user.name)
            setEmail(user.email)
        }
     }    
-},[history,user,userInfo,dispatch])
+},[history,user,userInfo,myOrder,dispatch])
 
 const handleSubmit= (e)=>{
     e.preventDefault()
@@ -99,6 +105,36 @@ const handleSubmit= (e)=>{
                     </Col>
                     <Col md={9}>
                         <h2>My Orders</h2>
+                        {orderLoading?<Loading/>:orderError?<Message message={orderError}/>:(
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <td>ID</td>
+                                        <td>DATE</td>
+                                        <td>TOTAL</td>
+                                        <td>PAID</td>
+                                        <td>DELIVERED</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {myOrder.map(order=>(
+                                        <tr key={order._id}>
+                                          <td>{order._id}</td>  
+                                          <td>{order.createdAt.substring(0,10)}</td>  
+                                          <td>{order.totalPrice}</td>  
+                                          <td>{order.isPaid?order.paidAt.substring(0,10):(
+                                              <i className="fas fa-times" style={{color:'orange'}}></i>
+                                          )}</td>  
+                                          <td>{order.isDelivered?order.deliveredAt.substring(0,10):(
+                                              <i className="fas fa-times" style={{color:'orange'}}></i>
+                                          )} </td>
+                                          
+                                          <td><Button type="button" className="btn btn-success"><NavLink as={Link} to={`/order/${order._id}`}>Details</NavLink></Button></td> 
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        )}
                     </Col>
                 </Row>
             </Container>

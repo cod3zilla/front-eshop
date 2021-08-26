@@ -1,5 +1,5 @@
 main {
-    height: 85vh;
-    margin: 0;
-    padding:0;
+    box-sizing: border-box;
+    height: auto;
+    width: auto;
 }

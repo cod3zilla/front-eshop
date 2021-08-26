@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { MY_ORDER_RESET } from '../constants/orderConstant'
 import {USER_LOG_REQUEST,
         USER_LOG_SUCCESS,
         USER_LOG_FAILURE,
@@ -11,7 +12,7 @@ import {USER_LOG_REQUEST,
         USER_PROFILE_FAILURE,
         USER_UPDATE_REQUEST,
         USER_UPDATE_SUCCESS,
-        USER_UPDATE_FAILURE
+        USER_UPDATE_FAILURE,        
 } from '../constants/userConstant'
 
 export const register=(name, email, password)=> async (dispatch)=>{
@@ -90,6 +91,8 @@ export const getUserProfile=(id)=> async (dispatch, getState)=>{
 export const logout=()=>dispatch=>{
     localStorage.removeItem("userInfo")
     dispatch({type:USER_LOG_LOGOUT})
+    dispatch({type:MY_ORDER_RESET})
+    
 }
 
 export const userUpdateProfile=(user)=> async (dispatch, getState)=>{

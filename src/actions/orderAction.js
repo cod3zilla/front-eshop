@@ -14,6 +14,8 @@ import {
     MY_ORDER_FAILURE,
     } from '../constants/orderConstant'
 
+    
+
 export const createOrders=(order)=>async (dispatch, getState)=>{
     try {
         dispatch({
@@ -75,10 +77,11 @@ export const payOrder=(orderId, paymentResult)=>async (dispatch, getState)=>{
         const {userLog:{userInfo}}=getState()
         const config={
             headers:{
+                "Content-Type":'application/x-www-form-urlencoded',
                 Authorization:`Bearer ${userInfo.token}`
             }
         }
-        const {data}= await axios.put(`https://mern-shopzilla.herokuapp.com/order/${orderId}/pay`,config)
+        const {data}= await axios.put(`https://mern-shopzilla.herokuapp.com/order/payment/${orderId}/pay`,{ crossdomain: true },config,paymentResult)
 
         dispatch({
             type:ORDER_PAY_SUCCESS,
@@ -102,14 +105,15 @@ export const getOrderList= ()=>async (dispatch,getState)=>{
         const {userLog:{userInfo}}=getState()
         const config={
             headers:{
+                
                 Authorization:`Bearer ${userInfo.token}`
             }
         }
-        const {data}= await axios.get('https://mern-shopzilla.herokuapp.com/order/myorder', config)
+        const {data}= await axios.get('https://mern-shopzilla.herokuapp.com/order/userorder', config)
 
         dispatch({
             type:MY_ORDER_SUCCESS,
-            myOrderList:data
+            payload:data
         })
     } catch (error) {
         dispatch({

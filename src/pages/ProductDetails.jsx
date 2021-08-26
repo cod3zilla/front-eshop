@@ -31,18 +31,18 @@ const ProductDetails = ({match,history}) => {
                         <Image style={{width:'75%'}} fluid src={product.image} />
                     </Col>    
                     <Col  md={3}>
-                        <ListGroupItem className="my-3 text-light">
+                        <ListGroupItem className="my-3">
                             <h3>{product.title}</h3>
                             <Ratings rating={product.rating}/>                    
                         </ListGroupItem>
-                        <ListGroupItem className="text-light">
+                        <ListGroupItem >
                                 {product.description}
                         </ListGroupItem>
-                        <ListGroupItem className="text-light">Price: {product.price} $
+                        <ListGroupItem >Price: {product.price} $
                         </ListGroupItem>
                     </Col>    
                     <Col>
-                        <ListGroupItem className="my-5 text-light">Status: {product.countInStock} In Stock</ListGroupItem>
+                        <ListGroupItem className="my-5 ">Status: {product.countInStock} In Stock</ListGroupItem>
                         
                         {product.countInStock > 0 && (
                             <ListGroupItem>
