@@ -1,7 +1,7 @@
 import React,{useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
 import { productsAction } from '../actions/productsAction'
-import { Row,Col,Container,Image } from 'react-bootstrap'
+import { Row,Col,Image } from 'react-bootstrap'
 import Product from '../components/Product'
 import Loading from '../components/Loading'
 import Message from '../components/Message'
@@ -30,7 +30,8 @@ const Home = () => {
                     {product.category==="men's clothing"?(<Product product={product} />):null}
                 
                 </Col>
-            ))}  
+            ))} 
+            
             <Image style={{height:'18rem',marginTop:'1rem'}} src="https://dkemhji6i1k0x.cloudfront.net/000_clients/84990/page/84990yNL7ADjD.jpg"/>
             <h2>Women's Fashion</h2> 
             {products.map(product =>(

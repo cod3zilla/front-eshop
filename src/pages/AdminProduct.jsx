@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
 import { productsAction } from '../actions/productsAction'
 import {Link} from 'react-router-dom'
@@ -9,7 +9,7 @@ import { Button,Table } from 'react-bootstrap'
 const AdminProduct = () => {
     const dispatch=useDispatch()
     const productList=useSelector(state=>state.productList)
-    const {loading,error,products}=productList
+    const {products}=productList
     
     useEffect(()=>{
         dispatch(productsAction())

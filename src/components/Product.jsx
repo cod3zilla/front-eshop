@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, NavLink,ListGroup,ListGroupItem } from 'react-bootstrap'
+import { Card, NavLink,ListGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Ratings from './Ratings'
 const Product = ({product}) => {
